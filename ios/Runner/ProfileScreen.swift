@@ -11,6 +11,8 @@ struct ProfileScreen: View {
     var name: String
     var email: String
     var imageName: String
+    
+    var action: () -> Void
 
     var body: some View {
         VStack {
@@ -31,6 +33,9 @@ struct ProfileScreen: View {
             } else {
                 Text("Image not found")
                     .foregroundColor(.red)
+            }
+            Button("Send data to Dashboard") {
+                action()
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)

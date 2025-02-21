@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../viewmodels/dashboard_viewmodel.dart';
@@ -11,6 +12,33 @@ class DashboardScreen extends ConsumerStatefulWidget {
 }
 
 class _DashboardScreenState extends ConsumerState<DashboardScreen> {
+  // final channel = MethodChannel('channel');
+
+  // void setUpMethodChannel() {
+  //   channel.setMethodCallHandler((MethodCall call) async {
+  //     if (call.method == 'callDartMethod') {
+  //       final String message = call.arguments;
+  //       final name = message.split(',').elementAt(0);
+  //       final email = message.split(',').elementAt(1);
+  //       final imageName = message.split(',').elementAt(2);
+  //       final result = setProfileData(
+  //         name: name,
+  //         email: email,
+  //         imageName: imageName,
+  //       );
+  //       return result;
+  //     }
+  //   });
+  // }
+
+  // void setProfileData({
+  //   String? name,
+  //   String? email,
+  //   String? imageName,
+  // }) {
+  //   ref.read(dashboardViewmodel.notifier).setProfile(name, email, imageName);
+  // }
+
   @override
   void initState() {
     super.initState();
@@ -24,7 +52,11 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
   @override
   Widget build(BuildContext context) {
     final isLoading = ref.watch(dashboardViewmodel.select((e) => e.isLoading));
-    final weather = ref.watch(dashboardViewmodel.select((e) => e.data));
+    final data = ref.watch(dashboardViewmodel.select((e) => e.data));
+    final weather = data?.data;
+    final name = data?.name;
+    final email = data?.email;
+    final imageName = data?.imageName;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Dashboard'),
@@ -56,6 +88,24 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                           style: const TextStyle(fontSize: 20),
                         ),
                       ],
+                    ),
+                  const Divider(),
+                  if (name != null)
+                    Text(
+                      name,
+                      style: const TextStyle(
+                          fontSize: 24, fontWeight: FontWeight.bold),
+                    ),
+                  if (email != null)
+                    Text(
+                      email,
+                      style: const TextStyle(
+                          fontSize: 48, fontWeight: FontWeight.w500),
+                    ),
+                  if (imageName != null)
+                    Text(
+                      imageName,
+                      style: const TextStyle(fontSize: 20),
                     ),
                 ],
               ),

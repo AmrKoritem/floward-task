@@ -1,14 +1,44 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ProfileScreen extends StatefulWidget {
+import '../viewmodels/dashboard_viewmodel.dart';
+
+class ProfileScreen extends ConsumerStatefulWidget {
   const ProfileScreen({super.key});
 
   @override
-  State<ProfileScreen> createState() => _ProfileScreenState();
+  ConsumerState<ProfileScreen> createState() => _ProfileScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
+class _ProfileScreenState extends ConsumerState<ProfileScreen> {
+  final channel = const MethodChannel('channelll');
+
+  void setUpMethodChannel() {
+    channel.setMethodCallHandler((MethodCall call) async {
+      if (call.method == 'callDartMethod') {
+        final String message = call.arguments;
+        final name = message.split(',').elementAt(0);
+        final email = message.split(',').elementAt(1);
+        final imageName = message.split(',').elementAt(2);
+        final result = setProfileData(
+          name: name,
+          email: email,
+          imageName: imageName,
+        );
+        return result;
+      }
+    });
+  }
+
+  void setProfileData({
+    String? name,
+    String? email,
+    String? imageName,
+  }) {
+    ref.read(dashboardViewmodel.notifier).setProfile(name, email, imageName);
+  }
+
   @override
   Widget build(BuildContext context) {
     const String viewType = 'ProfileScreen';

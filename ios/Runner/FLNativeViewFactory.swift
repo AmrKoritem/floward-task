@@ -49,6 +49,7 @@ class FLNativeViewFactory: NSObject, FlutterPlatformViewFactory {
 }
 
 class FLNativeView: NSObject, FlutterPlatformView {
+    static let channelName = "channelll"
     private var _view: UIView
 
     init(
@@ -60,7 +61,18 @@ class FLNativeView: NSObject, FlutterPlatformView {
         binaryMessenger messenger: FlutterBinaryMessenger?
     ) {
         // Create the SwiftUI view with the data passed from Flutter
-        let swiftUIView = ProfileScreen(name: name, email: email, imageName: imageName)
+        let swiftUIView = ProfileScreen(name: name, email: email, imageName: imageName) {
+            guard let messenger else {return}
+            let methodChannel = FlutterMethodChannel(name: FLNativeView.channelName,
+                                                         binaryMessenger: messenger)
+            methodChannel.invokeMethod("callDartMethod", arguments: "\(name),\(email),\(imageName),") { (result) in
+                  if let response = result as? String {
+                    print("Dart method response: \(response)")
+                  } else {
+                    print("Error: Dart method did not return a valid response.")
+                  }
+                }
+        }
         let hostingController = UIHostingController(rootView: swiftUIView)
 
         _view = hostingController.view

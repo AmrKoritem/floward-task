@@ -27,8 +27,9 @@ class _TabbarScreenState extends State<TabbarScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: tabs.elementAt(_selectedIndex),
+      body: IndexedStack(
+        index: _selectedIndex,
+        children: tabs,
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
