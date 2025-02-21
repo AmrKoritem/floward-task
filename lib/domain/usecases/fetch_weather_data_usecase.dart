@@ -11,8 +11,8 @@ class FetchWeatherDataUsecase {
   FetchWeatherDataUsecase({Repo? repository})
       : _repository = repository ?? RepoImp();
 
-  Future<Either<WeatherData, ErrorModel?>> call() async {
-    final result = await _repository.fetchWeatherData();
+  Future<Either<WeatherData, ErrorModel?>> call(String city) async {
+    final result = await _repository.fetchWeatherData(city);
     return result.fold(
       (data) => Left(data),
       (error) => Right(error),

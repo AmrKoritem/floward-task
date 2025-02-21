@@ -16,7 +16,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback(
       (_) {
-        ref.read(dashboardViewmodel.notifier).fetchWeatherData();
+        ref.read(dashboardViewmodel.notifier).fetchWeatherData('Cairo');
       },
     );
   }

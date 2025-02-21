@@ -16,10 +16,10 @@ class DashboardViewmodel extends StateNotifier<BaseState<WeatherData?>> {
             fetchWeatherDataUsecase ?? FetchWeatherDataUsecase(),
         super(BaseState(data: null));
 
-  Future<void> fetchWeatherData() async {
+  Future<void> fetchWeatherData(String city) async {
     if (state.isLoading) return;
     state = state.copyWith(isLoading: true);
-    final result = await _fetchWeatherDataUsecase.call();
+    final result = await _fetchWeatherDataUsecase.call(city);
     return result.fold(
       (data) {
         state = state.copyWith(isLoading: false, data: data);

@@ -13,8 +13,8 @@ class RepoImp implements Repo {
   }) : _datasource = datasource ?? WeatherDatasourceImp();
 
   @override
-  Future<Either<WeatherData, ErrorModel?>> fetchWeatherData() async {
-    final response = await _datasource.fetchWeatherData();
+  Future<Either<WeatherData, ErrorModel?>> fetchWeatherData(String city) async {
+    final response = await _datasource.fetchWeatherData(city);
     return response.fold((l) => Left(l as WeatherData), (r) => Right(r));
   }
 }

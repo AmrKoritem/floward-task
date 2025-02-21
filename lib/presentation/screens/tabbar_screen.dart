@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import './dashboard_screen.dart';
+
 class TabbarScreen extends StatefulWidget {
   const TabbarScreen({super.key});
 
@@ -11,9 +13,7 @@ class _TabbarScreenState extends State<TabbarScreen> {
   int _selectedIndex = 0;
 
   final List<Widget> tabs = <Widget>[
-    Container(
-      color: Colors.red,
-    ),
+    const DashboardScreen(),
     Container(
       color: Colors.yellow,
     ),
