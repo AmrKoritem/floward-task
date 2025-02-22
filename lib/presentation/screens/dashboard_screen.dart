@@ -12,38 +12,39 @@ class DashboardScreen extends ConsumerStatefulWidget {
 }
 
 class _DashboardScreenState extends ConsumerState<DashboardScreen> {
-  // final channel = MethodChannel('channel');
+  final channel = const MethodChannel('channelll');
 
-  // void setUpMethodChannel() {
-  //   channel.setMethodCallHandler((MethodCall call) async {
-  //     if (call.method == 'callDartMethod') {
-  //       final String message = call.arguments;
-  //       final name = message.split(',').elementAt(0);
-  //       final email = message.split(',').elementAt(1);
-  //       final imageName = message.split(',').elementAt(2);
-  //       final result = setProfileData(
-  //         name: name,
-  //         email: email,
-  //         imageName: imageName,
-  //       );
-  //       return result;
-  //     }
-  //   });
-  // }
+  void setUpMethodChannel() {
+    channel.setMethodCallHandler((MethodCall call) async {
+      if (call.method == 'callDartMethod') {
+        final String message = call.arguments;
+        final name = message.split(',').elementAt(0);
+        final email = message.split(',').elementAt(1);
+        final imageName = message.split(',').elementAt(2);
+        final result = setProfileData(
+          name: name,
+          email: email,
+          imageName: imageName,
+        );
+        return result;
+      }
+    });
+  }
 
-  // void setProfileData({
-  //   String? name,
-  //   String? email,
-  //   String? imageName,
-  // }) {
-  //   ref.read(dashboardViewmodel.notifier).setProfile(name, email, imageName);
-  // }
+  void setProfileData({
+    String? name,
+    String? email,
+    String? imageName,
+  }) {
+    ref.read(dashboardViewmodel.notifier).setProfile(name, email, imageName);
+  }
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback(
       (_) {
+        setUpMethodChannel();
         ref.read(dashboardViewmodel.notifier).fetchWeatherData('Cairo');
       },
     );

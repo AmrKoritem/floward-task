@@ -18,6 +18,9 @@ Usually this never gives me trouble. However, it just didn't work...
 So this could be considered a KNOWN ISSUE I guess. Typically, in the workplace, I'd give early note when unexpected delays occur,
 but I wasn't sure how this would work in this case.
 
+EDIT: The issue happened to be that I forgot to call the `setUpMethodChannel` method in the screen! I've probably missed that as
+I was worried about the time limit...
+
 ## How API data flows
 
 Just like any typicall `Clean Architecture`. The view model uses a use-case to trigger the logic. Then the use-case calls
@@ -28,7 +31,7 @@ which, in our case, is the weather data.
 
 - I have used the network layer I usually use in other projects, so you should expect to find unused files in this demo.
 - There's no error handling, since it wasn't required.
-- As mentioned above, the final task, which is to send data from native side to dart, is NOT DONE.
+- ~~As mentioned above, the final task, which is to send data from native side to dart, is NOT DONE.~~
 - A resources generation script is added to the project. I use this one in all my projects. However, you won't need to use it since,
 for this demo, I didn't include the generated files in the .gitignore since this is just a demo.
 - fvm was added to the demo. PLease use it to get the proper flutter version to run it.
